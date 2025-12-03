@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CV Builder | Professional Resume Creator</title>
+    <style>
+        :root {
+            --white: #ffffff;
+            --black: #000000;
+            --gray-dark: #333333;
+            --gray: #666666;
+            --gray-light: #f5f5f5;
+            --gray-border: #e0e0e0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--white);
+            color: var(--black);
+            line-height: 1.5;
+            min-height: 100vh;
+            padding: 20px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            display: flex;
+            max-width: 1400px;
+            margin: 0 auto;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .header {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--black);
+        }
+
+        .header h1 {
+            font-weight: 300;
+            font-size: 2.5rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .form-section {
+            flex: 1;
+            min-width: 300px;
+            padding: 0;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--gray-dark);
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--gray-border);
+            border-radius: 0;
+            font-size: 1rem;
+            font-family: inherit;
+            background-color: var(--white);
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--black);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .photo-upload {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .photo-preview {
+            width: 150px;
+            height: 150px;
+            border: 1px solid var(--gray-border);
+            background-color: var(--gray-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .photo-preview img {
+            max-width: 100%;
+            max-height: 100%;
+            display: none;
+        }
+
+        .photo-preview .placeholder {
+            color: var(--gray);
+            font-size: 0.8rem;
+            text-align: center;
+        }
+
+        .upload-btn {
+            padding: 10px 20px;
+            background-color: var(--white);
+            color: var(--black);
+            border: 1px solid var(--black);
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .upload-btn:hover {
+            background-color: var(--black);
+            color: var(--white);
+        }
+
+        .buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: 1px solid var(--black);
+            background-color: var(--white);
+            color: var(--black);
+            cursor: pointer;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
+        }
+
+        .btn:hover {
+            background-color: var(--black);
+            color: var(--white);
+        }
+
+        .btn:active {
+            transform: translateY(1px);
+        }
+
+        .cv-section {
+            flex: 1;
+            min-width: 300px;
+            padding: 0;
+        }
+
+        /* CV Preview Styles */
+        #cv {
+            padding: 40px;
+            background-color: var(--white);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--gray-border);
+            min-height: 100%;
+        }
+
+        .cv-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--black);
+        }
+
+        .cv-name-title {
+            flex: 1;
+        }
+
+        .cv-name {
+            font-weight: 300;
+            font-size: 2.2rem;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+        }
+
+        .cv-title {
+            font-weight: 400;
+            font-size: 1rem;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .cv-photo-container {
+            width: 120px;
+            height: 120px;
+            border: 1px solid var(--gray-border);
+            background-color: var(--gray-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .cv-photo {
+            max-width: 100%;
+            max-height: 100%;
+            display: none;
+        }
+
+        .cv-photo-placeholder {
+            color: var(--gray);
+            font-size: 0.7rem;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .cv-section-title {
+            font-weight: 400;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 30px 0 15px 0;
+            padding-bottom: 5px;
+            border-bottom: 1px solid var(--gray-border);
+        }
+
+        .cv-content {
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .cv-content p {
+            margin-bottom: 10px;
+        }
+
+        .cv-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 5px;
+        }
+
+        .skill-tag {
+            padding: 4px 12px;
+            border: 1px solid var(--gray-border);
+            font-size: 0.85rem;
+            background-color: var(--gray-light);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { 
+                opacity: 0; 
+                transform: translateY(20px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .slide-up {
+            animation: slideUp 0.5s ease-out;
+        }
+
+        /* PDF specific styles */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            
+            #cv, #cv * {
+                visibility: visible;
+            }
+            
+            #cv {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                padding: 20mm;
+                border: none;
+                box-shadow: none;
+            }
+            
+            .btn, .form-section, .header {
+                display: none;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .form-section, .cv-section {
+                width: 100%;
+            }
+            
+            .btn {
+                min-width: 100%;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .cv-header {
+                flex-direction: column;
+            }
+            
+            .cv-photo-container {
+                margin-top: 15px;
+                align-self: flex-start;
+            }
+            
+            .cv-name {
+                font-size: 1.8rem;
+            }
+        }
+
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--black);
+            color: var(--white);
+            padding: 12px 20px;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 1000;
+            animation: slideUp 0.3s ease-out, fadeOut 0.3s ease-out 2.7s forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeOut {
+            to { opacity: 0; transform: translateY(20px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>CV Builder</h1>
+        <p>Create a professional resume</p>
+    </div>
+
+    <div class="container">
+        <div class="form-section">
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input id="name" placeholder="John Doe" />
+            </div>
+            
+            <div class="form-group">
+                <label for="title">Professional Title</label>
+                <input id="title" placeholder="Software Engineer" />
+            </div>
+            
+            <div class="form-group">
+                <label for="about">Professional Summary</label>
+                <textarea id="about" placeholder="Brief professional summary"></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="experience">Work Experience</label>
+                <textarea id="experience" placeholder="Work experience details"></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="education">Education</label>
+                <textarea id="education" placeholder="Educational background"></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="skills">Skills</label>
+                <input id="skills" placeholder="JavaScript, React, Project Management" />
+            </div>
+            
+            <div class="form-group">
+                <label>Profile Photo</label>
+                <div class="photo-upload">
+                    <div class="photo-preview" id="photoPreview">
+                        <div class="placeholder">No photo selected<br>150x150px recommended</div>
+                        <img id="photoPreviewImg" src="" alt="Preview">
+                    </div>
+                    <input type="file" id="photoUpload" accept="image/*" class="upload-btn" style="display: none;">
+                    <button type="button" class="upload-btn" onclick="document.getElementById('photoUpload').click()">Upload Photo</button>
+                </div>
+            </div>
+            
+            <div class="buttons">
+                <button class="btn" onclick="generatePDF()">Download PDF</button>
+                <button class="btn" onclick="clearForm()">Clear All</button>
+            </div>
+        </div>
+
+        <div class="cv-section">
+            <div id="cv">
+                <div class="cv-header">
+                    <div class="cv-name-title">
+                        <h1 id="cv_name" class="cv-name">John Doe</h1>
+                        <div id="cv_title" class="cv-title">Software Engineer</div>
+                    </div>
+                    <div class="cv-photo-container">
+                        <div class="cv-photo-placeholder">No photo</div>
+                        <img id="cv_photo" class="cv-photo" src="" alt="Profile Photo">
+                    </div>
+                </div>
+                
+                <div class="cv-section-title">Professional Summary</div>
+                <div id="cv_about" class="cv-content">
+                    <p>Professional summary will appear here.</p>
+                </div>
+                
+                <div class="cv-section-title">Work Experience</div>
+                <div id="cv_experience" class="cv-content">
+                    <p>Work experience will appear here.</p>
+                </div>
+                
+                <div class="cv-section-title">Education</div>
+                <div id="cv_education" class="cv-content">
+                    <p>Educational background will appear here.</p>
+                </div>
+                
+                <div class="cv-section-title">Skills</div>
+                <div id="cv_skills" class="cv-content">
+                    <div class="cv-skills">
+                        <span class="skill-tag">Skills will appear here</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast notification -->
+    <div id="toast" class="toast" style="display: none;">
+        <span id="toastMessage"></span>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+    <script>
+        // Real-time CV update
+        const inputs = ["name", "title", "about", "experience", "education", "skills"];
+
+        inputs.forEach(id => {
+            document.getElementById(id).addEventListener("input", () => {
+                const value = document.getElementById(id).value;
+                const cvElement = document.getElementById("cv_" + id);
+                
+                if (id === "skills") {
+                    const skillsContainer = document.getElementById("cv_skills");
+                    skillsContainer.innerHTML = '';
+                    
+                    if (value.trim()) {
+                        const skills = value.split(',').map(skill => skill.trim()).filter(skill => skill);
+                        skills.forEach(skill => {
+                            const skillTag = document.createElement('span');
+                            skillTag.className = 'skill-tag';
+                            skillTag.textContent = skill;
+                            skillsContainer.appendChild(skillTag);
+                        });
+                    } else {
+                        const defaultTag = document.createElement('span');
+                        defaultTag.className = 'skill-tag';
+                        defaultTag.textContent = 'Skills will appear here';
+                        skillsContainer.appendChild(defaultTag);
+                    }
+                } else {
+                    cvElement.innerHTML = value || getDefaultText(id);
+                }
+                
+                cvElement.classList.add('fade-in');
+                setTimeout(() => cvElement.classList.remove('fade-in'), 500);
+            });
+        });
+
+        // Photo upload handling
+        document.getElementById('photoUpload').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    // Update preview
+                    const previewImg = document.getElementById('photoPreviewImg');
+                    const previewPlaceholder = document.querySelector('.photo-preview .placeholder');
+                    previewImg.src = e.target.result;
+                    previewImg.style.display = 'block';
+                    previewPlaceholder.style.display = 'none';
+                    
+                    // Update CV photo
+                    const cvPhoto = document.getElementById('cv_photo');
+                    const cvPhotoPlaceholder = document.querySelector('.cv-photo-placeholder');
+                    cvPhoto.src = e.target.result;
+                    cvPhoto.style.display = 'block';
+                    cvPhotoPlaceholder.style.display = 'none';
+                    
+                    showToast('Photo uploaded successfully');
+                };
+                
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Helper function for default text
+        function getDefaultText(id) {
+            const defaults = {
+                "name": "John Doe",
+                "title": "Software Engineer",
+                "about": "Professional summary will appear here.",
+                "experience": "Work experience will appear here.",
+                "education": "Educational background will appear here."
+            };
+            return defaults[id] || "";
+        }
+
+        // Generate PDF function
+        function generatePDF() {
+            const cv = document.getElementById("cv");
+            const name = document.getElementById("name").value || "CV";
+            
+            // Options for PDF generation
+            const options = {
+                margin: [15, 15, 15, 15],
+                filename: `CV_${name.replace(/\s+/g, '_')}.pdf`,
+                image: { 
+                    type: 'jpeg', 
+                    quality: 0.98 
+                },
+                html2canvas: { 
+                    scale: 2,
+                    useCORS: true,
+                    backgroundColor: '#ffffff'
+                },
+                jsPDF: { 
+                    unit: 'mm', 
+                    format: 'a4', 
+                    orientation: 'portrait' 
+                },
+                pagebreak: { mode: 'avoid-all' }
+            };
+            
+            // Show loading state
+            const originalBtn = document.querySelector('.btn');
+            const originalText = originalBtn.textContent;
+            originalBtn.textContent = 'Generating PDF...';
+            originalBtn.disabled = true;
+            
+            // Generate PDF
+            html2pdf()
+                .from(cv)
+                .set(options)
+                .save()
+                .then(() => {
+                    // Restore button
+                    originalBtn.textContent = originalText;
+                    originalBtn.disabled = false;
+                    
+                    showToast('PDF downloaded successfully');
+                })
+                .catch(err => {
+                    console.error('PDF generation error:', err);
+                    originalBtn.textContent = originalText;
+                    originalBtn.disabled = false;
+                    showToast('Error generating PDF');
+                });
+        }
+
+        // Clear form function
+        function clearForm() {
+            if (confirm("Clear all form data?")) {
+                inputs.forEach(id => {
+                    document.getElementById(id).value = '';
+                    const cvElement = document.getElementById("cv_" + id);
+                    
+                    if (id === "skills") {
+                        const skillsContainer = document.getElementById("cv_skills");
+                        skillsContainer.innerHTML = '<span class="skill-tag">Skills will appear here</span>';
+                    } else {
+                        cvElement.innerHTML = getDefaultText(id);
+                    }
+                });
+                
+                // Reset name and title
+                document.getElementById("cv_name").innerText = "John Doe";
+                document.getElementById("cv_title").innerText = "Software Engineer";
+                
+                // Reset photo
+                document.getElementById('photoUpload').value = '';
+                document.getElementById('photoPreviewImg').src = '';
+                document.getElementById('photoPreviewImg').style.display = 'none';
+                document.querySelector('.photo-preview .placeholder').style.display = 'block';
+                
+                document.getElementById('cv_photo').src = '';
+                document.getElementById('cv_photo').style.display = 'none';
+                document.querySelector('.cv-photo-placeholder').style.display = 'block';
+                
+                showToast('Form cleared');
+            }
+        }
+
+        // Toast notification function
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            toastMessage.textContent = message;
+            
+            toast.style.display = 'flex';
+            toast.style.opacity = '1';
+            toast.style.transform = 'translateY(0)';
+            
+            // Hide after 3 seconds
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    toast.style.display = 'none';
+                }, 300);
+            }, 3000);
+        }
+
+        // Load example data
+        function loadExampleData() {
+            document.getElementById('name').value = 'Alex Johnson';
+            document.getElementById('name').dispatchEvent(new Event('input'));
+            
+            document.getElementById('title').value = 'Senior Software Engineer';
+            document.getElementById('title').dispatchEvent(new Event('input'));
+            
+            document.getElementById('about').value = 'Experienced software engineer with 8+ years in full-stack development. Specialized in creating scalable web applications and leading development teams. Strong background in cloud architecture and DevOps practices.';
+            document.getElementById('about').dispatchEvent(new Event('input'));
+            
+            document.getElementById('experience').value = 'Senior Software Engineer at TechCorp (2020-Present)\n- Lead a team of 7 developers on enterprise SaaS platform\n- Improved system performance by 45% through architecture optimization\n- Implemented CI/CD pipeline reducing deployment time by 70%\n\nSoftware Developer at WebSolutions (2017-2020)\n- Developed customer-facing web applications using React and Node.js\n- Collaborated with product team to implement new features\n- Mentored 3 junior developers';
+            document.getElementById('experience').dispatchEvent(new Event('input'));
+            
+            document.getElementById('education').value = 'M.Sc. Computer Science, Stanford University (2015-2017)\nB.Sc. Software Engineering, MIT (2011-2015)';
+            document.getElementById('education').dispatchEvent(new Event('input'));
+            
+            document.getElementById('skills').value = 'JavaScript, React, Node.js, Python, AWS, Docker, Kubernetes, Git, REST APIs, Agile/Scrum';
+            document.getElementById('skills').dispatchEvent(new Event('input'));
+            
+            showToast('Example CV loaded');
+        }
+
+        // Auto-load example after delay
+        setTimeout(() => {
+            const name = document.getElementById('name').value;
+            if (!name.trim()) {
+                loadExampleData();
+            }
+        }, 500);
+    </script>
+</body>
+</html>
